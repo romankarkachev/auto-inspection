@@ -3,19 +3,17 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\NomenclatureTypes;
-use common\models\NomenclatureTypesSearch;
 use common\models\Nomenclature;
-use yii\helpers\Html;
+use common\models\NomenclatureSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 /**
- * NomenclatureTypesController implements the CRUD actions for NomenclatureTypes model.
+ * NomenclatureCommonController implements the CRUD actions for Nomenclature model.
  */
-class NomenclatureTypesController extends Controller
+class NomenclatureCommonController extends Controller
 {
     /**
      * @inheritdoc
@@ -43,12 +41,12 @@ class NomenclatureTypesController extends Controller
     }
 
     /**
-     * Lists all NomenclatureTypes models.
+     * Lists all Nomenclature models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new NomenclatureTypesSearch();
+        $searchModel = new NomenclatureSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -58,16 +56,16 @@ class NomenclatureTypesController extends Controller
     }
 
     /**
-     * Creates a new NomenclatureTypes model.
+     * Creates a new Nomenclature model.
      * If creation is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new NomenclatureTypes();
+        $model = new Nomenclature();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/nomenclature-types']);
+            return $this->redirect(['/nomenclature-common']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -76,7 +74,7 @@ class NomenclatureTypesController extends Controller
     }
 
     /**
-     * Updates an existing NomenclatureTypes model.
+     * Updates an existing Nomenclature model.
      * If update is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -86,7 +84,7 @@ class NomenclatureTypesController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/nomenclature-types']);
+            return $this->redirect(['/nomenclature-common']);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -95,36 +93,28 @@ class NomenclatureTypesController extends Controller
     }
 
     /**
-     * Deletes an existing NomenclatureTypes model.
+     * Deletes an existing Nomenclature model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        // проверим, не используется ли элемент в Номенклатуре
-        $used_in = Nomenclature::find()->where(['type_id' => $id])->count();
-
-        if ($used_in > 0) return $this->render('/default/error', [
-            'name' => 'Элемент используется',
-            'message' => Html::encode('Элемент, который Вы пытаетесь удалить, используется в одном или нескольких других элементах системы (&laquo;Номенклатура&raquo;).'),
-        ]);
-
         $this->findModel($id)->delete();
 
-        return $this->redirect(['/nomenclature-types']);
+        return $this->redirect(['/nomenclature-common']);
     }
 
     /**
-     * Finds the NomenclatureTypes model based on its primary key value.
+     * Finds the Nomenclature model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return NomenclatureTypes the loaded model
+     * @return Nomenclature the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = NomenclatureTypes::findOne($id)) !== null) {
+        if (($model = Nomenclature::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('Запрошенная страница не может быть найдена.');

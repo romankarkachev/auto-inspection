@@ -56,7 +56,7 @@ class NomenclatureTypes extends \yii\db\ActiveRecord
      * Функция возвращает массив для использования в выпадающих списках форм.
      * @return array
      */
-    public static function ArrayMap()
+    public static function arrayMap()
     {
         return ArrayHelper::map(NomenclatureTypes::find()->orderBy('name')->all(), 'id', 'name');
     }

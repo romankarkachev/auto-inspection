@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\NomenclatureTypes */
+/* @var $model common\models\Suppliers */
 /* @var $form yii\bootstrap\ActiveForm */
 ?>
 
-<div class="nomenclature-types-form">
+<div class="suppliers-form">
     <div class="admin-form theme-info">
         <div class="panel heading-border panel-info">
             <div class="panel-body pt40 pb5 bg-light">
@@ -22,21 +22,25 @@ use yii\bootstrap\ActiveForm;
 
                     </div>
                     <div class="col-md-3">
-                        <?= $form->field($model, 'name_plural_nominative_case')->textInput(['maxlength' => true, 'placeholder' => '(кто? что?)']) ?>
+                        <?= $form->field($model, 'name_full')->textInput(['maxlength' => true, 'placeholder' => 'Введите наименование']) ?>
 
                     </div>
                     <div class="col-md-3">
-                        <?= $form->field($model, 'name_plural_genitive_case')->textInput(['maxlength' => true, 'placeholder' => '(кого? чего?)']) ?>
+                        <?= $form->field($model, 'address')->textInput(['maxlength' => true, 'placeholder' => 'Введите адрес']) ?>
 
                     </div>
                     <div class="col-md-3">
-                        <?= $form->field($model, 'name_plural_dative_case')->textInput(['maxlength' => true, 'placeholder' => '(кому? чему?)']) ?>
+                        <?= $form->field($model, 'phones')->textInput(['maxlength' => true, 'placeholder' => 'Введите телефоны']) ?>
 
                     </div>
                 </div>
+                <div class="form-group">
+                    <?= $form->field($model, 'notes')->textarea(['rows' => 3]) ?>
+
+                </div>
             </div>
             <div class="panel-footer">
-                <?= Html::a('<i class="fa fa-arrow-left" aria-hidden="true"></i> Типы номенклатуры', ['/nomenclature-types'], ['class' => 'btn btn-default btn-gradient btn-lg', 'title' => 'Вернуться в список. Изменения не будут сохранены']) ?>
+                <?= Html::a('<i class="fa fa-arrow-left" aria-hidden="true"></i> Поставщики запчастей', ['/suppliers'], ['class' => 'btn btn-default btn-gradient btn-lg', 'title' => 'Вернуться в список. Изменения не будут сохранены']) ?>
 
                 <?php if ($model->isNewRecord): ?>
                     <?= Html::submitButton('<i class="fa fa-plus-circle" aria-hidden="true"></i> Создать', ['class' => 'btn btn-success btn-gradient btn-lg']) ?>

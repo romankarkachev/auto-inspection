@@ -21,7 +21,7 @@ class m161023_063637_create_users_and_roles extends Migration
         $user_adm->username = 'root';
         $user_adm->email = 'root@gmail.com';
         $user_adm->password = '1Qazxsw2';
-        $user_adm->confirmed_at = mktime();
+        $user_adm->confirmed_at = time();
         $user_adm->save();
         Yii::$app->authManager->assign($role_adm, $user_adm->id);
 
@@ -29,7 +29,7 @@ class m161023_063637_create_users_and_roles extends Migration
         $user_1->username = 'roman';
         $user_1->email = 'roman@karkachev.ru';
         $user_1->password = '123456';
-        $user_1->confirmed_at = mktime();
+        $user_1->confirmed_at = time();
         $user_1->save();
         Yii::$app->authManager->assign($role_user, $user_1->id);
         $user_1->profile->name = 'Роман Каркачев';
@@ -39,7 +39,7 @@ class m161023_063637_create_users_and_roles extends Migration
         $user_2->username = 'yaroslav';
         $user_2->email = 'yaroslav@karkachev.ru';
         $user_2->password = '123456';
-        $user_2->confirmed_at = mktime();
+        $user_2->confirmed_at = time();
         $user_2->save();
         Yii::$app->authManager->assign($role_user, $user_2->id);
         $user_2->profile->name = 'Ярослав Каркачев';

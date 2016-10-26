@@ -7,7 +7,6 @@ use yii\db\Migration;
  */
 class m161023_095849_create_nomenclature_types_table extends Migration
 {
-
     /**
      * @inheritdoc
      */
@@ -31,6 +30,13 @@ class m161023_095849_create_nomenclature_types_table extends Migration
             'name_plural_nominative_case' => 'Запчасти',
             'name_plural_genitive_case' => 'Запчастей',
             'name_plural_dative_case' => 'Запчастям',
+        ]);
+
+        $this->insert('nomenclature_types', [
+            'name' => 'Материал',
+            'name_plural_nominative_case' => 'Материалы',
+            'name_plural_genitive_case' => 'Материалов',
+            'name_plural_dative_case' => 'Материалам',
         ]);
 
         $this->insert('nomenclature_types', [

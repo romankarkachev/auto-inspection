@@ -328,7 +328,7 @@ else
                         </a>
                         <ul class="nav sub-nav">
                             <li>
-                                <?= Html::a('<span class="glyphicon glyphicon-book"></span> Мастерские', ['/sto']) ?>
+                                <?= Html::a('<span class="glyphicon glyphicon-book"></span> Мастерские', ['/service-stations']) ?>
 
                             </li>
                             <li>
@@ -366,12 +366,11 @@ else
                             </li>
                         </ul>
                     </li>
-
                     <li class="sidebar-label pt20">Номенклатура</li>
                     <li>
                         <a class="accordion-toggle" href="#">
                             <span class="fa fa-diamond"></span>
-                            <span class="sidebar-title">Запчасти и работы</span>
+                            <span class="sidebar-title">Общая</span>
                             <span class="caret"></span>
                         </a>
                         <ul class="nav sub-nav">
@@ -380,7 +379,24 @@ else
 
                             </li>
                             <li>
+                                <?= Html::a('<span class="fa fa-desktop"></span> Номенклатура', ['/nomenclature-common']) ?>
+
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="accordion-toggle" href="#">
+                            <span class="fa fa-diamond"></span>
+                            <span class="sidebar-title">Пользовательская</span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="nav sub-nav">
+                            <li>
                                 <?= Html::a('<span class="fa fa-desktop"></span> Запчасти', ['/nomenclature-parts']) ?>
+
+                            </li>
+                            <li>
+                                <?= Html::a('<span class="fa fa-cube"></span> Материалы', ['/nomenclature-stuff']) ?>
 
                             </li>
                             <li>
@@ -388,60 +404,6 @@ else
 
                             </li>
                         </ul>
-                    </li>
-
-                    <!-- sidebar bullets -->
-                    <li class="sidebar-label pt20">Projects</li>
-                    <li class="sidebar-proj">
-                        <a href="#projectOne">
-                            <span class="fa fa-dot-circle-o text-primary"></span>
-                            <span class="sidebar-title">Website Redesign</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-proj">
-                        <a href="#projectTwo">
-                            <span class="fa fa-dot-circle-o text-info"></span>
-                            <span class="sidebar-title">Ecommerce Panel</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-proj">
-                        <a href="#projectTwo">
-                            <span class="fa fa-dot-circle-o text-danger"></span>
-                            <span class="sidebar-title">Adobe Mockup</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-proj">
-                        <a href="#projectThree">
-                            <span class="fa fa-dot-circle-o text-warning"></span>
-                            <span class="sidebar-title">SSD Upgrades</span>
-                        </a>
-                    </li>
-
-                    <!-- sidebar progress bars -->
-                    <li class="sidebar-label pt25 pb10">User Stats</li>
-                    <li class="sidebar-stat">
-                        <a href="#projectOne" class="fs11">
-                            <span class="fa fa-inbox text-info"></span>
-                            <span class="sidebar-title text-muted">Email Storage</span>
-                            <span class="pull-right mr20 text-muted">35%</span>
-                            <div class="progress progress-bar-xs mh20 mb10">
-                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 35%">
-                                    <span class="sr-only">35% Complete</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="sidebar-stat">
-                        <a href="#projectOne" class="fs11">
-                            <span class="fa fa-dropbox text-warning"></span>
-                            <span class="sidebar-title text-muted">Bandwidth</span>
-                            <span class="pull-right mr20 text-muted">58%</span>
-                            <div class="progress progress-bar-xs mh20">
-                                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 58%">
-                                    <span class="sr-only">58% Complete</span>
-                                </div>
-                            </div>
-                        </a>
                     </li>
                 </ul>
                 <!-- End: Sidebar Menu -->
@@ -480,6 +442,11 @@ else
                         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                     ]) ?>
 
+                </div>
+                <div class="topbar-right fs18">
+                    <?php if (!empty($this->blocks['content-header'])): ?>
+                        <?= $this->blocks['content-header'] ?>
+                    <?php endif; ?>
                 </div>
             </header>
             <!-- End: Topbar -->

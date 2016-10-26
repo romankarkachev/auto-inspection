@@ -3,8 +3,8 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\NomenclatureTypes;
-use common\models\NomenclatureTypesSearch;
+use common\models\Units;
+use common\models\UnitsSearch;
 use common\models\Nomenclature;
 use yii\helpers\Html;
 use yii\web\Controller;
@@ -13,9 +13,9 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 /**
- * NomenclatureTypesController implements the CRUD actions for NomenclatureTypes model.
+ * UnitsController implements the CRUD actions for Units model.
  */
-class NomenclatureTypesController extends Controller
+class UnitsController extends Controller
 {
     /**
      * @inheritdoc
@@ -29,7 +29,7 @@ class NomenclatureTypesController extends Controller
                     [
                         'actions' => ['index', 'create', 'update', 'delete'],
                         'allow' => true,
-                        'roles' => ['root'],
+                        'roles' => ['@'],
                     ],
                 ],
             ],
@@ -43,13 +43,14 @@ class NomenclatureTypesController extends Controller
     }
 
     /**
-     * Lists all NomenclatureTypes models.
+     * Lists all Units models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new NomenclatureTypesSearch();
+        $searchModel = new UnitsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->sort = ['defaultOrder' => ['name' => SORT_ASC,]];
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -58,16 +59,16 @@ class NomenclatureTypesController extends Controller
     }
 
     /**
-     * Creates a new NomenclatureTypes model.
+     * Creates a new Units model.
      * If creation is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new NomenclatureTypes();
+        $model = new Units();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/nomenclature-types']);
+            return $this->redirect(['/units']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -76,7 +77,7 @@ class NomenclatureTypesController extends Controller
     }
 
     /**
-     * Updates an existing NomenclatureTypes model.
+     * Updates an existing Units model.
      * If update is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -86,7 +87,7 @@ class NomenclatureTypesController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/nomenclature-types']);
+            return $this->redirect(['/units']);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -95,7 +96,7 @@ class NomenclatureTypesController extends Controller
     }
 
     /**
-     * Deletes an existing NomenclatureTypes model.
+     * Deletes an existing Units model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -103,28 +104,28 @@ class NomenclatureTypesController extends Controller
     public function actionDelete($id)
     {
         // проверим, не используется ли элемент в Номенклатуре
-        $used_in = Nomenclature::find()->where(['type_id' => $id])->count();
+        $used_in = Nomenclature::find()->where(['unit_id' => $id])->count();
 
         if ($used_in > 0) return $this->render('/default/error', [
             'name' => 'Элемент используется',
-            'message' => Html::encode('Элемент, который Вы пытаетесь удалить, используется в одном или нескольких других элементах системы (&laquo;Номенклатура&raquo;).'),
+            'message' => Html::encode('Элемент, который Вы пытаетесь удалить, используется в одном или нескольких других элементах системы (&laquo;Номенклатура&raquo;, &laquo;Документы&raquo;).'),
         ]);
 
         $this->findModel($id)->delete();
 
-        return $this->redirect(['/nomenclature-types']);
+        return $this->redirect(['/units']);
     }
 
     /**
-     * Finds the NomenclatureTypes model based on its primary key value.
+     * Finds the Units model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return NomenclatureTypes the loaded model
+     * @return Units the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = NomenclatureTypes::findOne($id)) !== null) {
+        if (($model = Units::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('Запрошенная страница не может быть найдена.');

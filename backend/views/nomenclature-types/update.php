@@ -9,7 +9,7 @@ $this->title = $model->name.' '.HtmlPurifier::process('&mdash;').' Типы но
 $this->params['breadcrumbs'][] = ['label' => 'Типы номенклатуры', 'url' => ['/nomenclature-types']];
 $this->params['breadcrumbs'][] = $model->name;
 
-$this->blocks['content-header'] = $model->name.' <a href="#manual" class="m-r-sm" data-toggle="collapse" aria-controls="manual" aria-expanded="false" title="Показать инструкцию"><i class="fa fa-question-circle"></i></a>';
+$this->blocks['content-header'] = '<a href="#manual" class="m-r-sm" data-toggle="collapse" aria-controls="manual" aria-expanded="false" title="Показать инструкцию"><i class="fa fa-question-circle"></i></a>';
 ?>
 <div class="nomenclature-types-update">
     <div id="manual" class="collapse text-justify">

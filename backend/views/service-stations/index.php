@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\NomenclatureTypesSearch */
+/* @var $searchModel common\models\ServiceStationsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Типы номенклатуры | '.Yii::$app->name;
-$this->params['breadcrumbs'][] = 'Типы номенклатуры';
-$this->blocks['table-header'] = 'Типы номенклатуры';
+$this->title = 'Станции техобслуживания | '.Yii::$app->name;
+$this->params['breadcrumbs'][] = 'Станции техобслуживания';
+$this->blocks['table-header'] = 'Станции техобслуживания';
 ?>
-<div class="nomenclature-types-list">
+<div class="service-stations-list">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'options' => ['class' => 'panel'],
@@ -31,6 +31,10 @@ $this->blocks['table-header'] = 'Типы номенклатуры';
         ],
         'columns' => [
             'name',
+            'name_full:ntext',
+            'address',
+            'phones',
+            'notes:ntext',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => 'Действия',
