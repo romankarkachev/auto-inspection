@@ -88,6 +88,7 @@ class Nomenclature extends \yii\db\ActiveRecord
     {
         return $this->hasOne(NomenclatureTypes::className(), ['id' => 'type_id']);
     }
+
     /**
      * @inheritdoc
      * @return string

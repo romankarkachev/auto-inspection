@@ -74,6 +74,6 @@ class Vendors extends \yii\db\ActiveRecord
      */
     public function getCountryName()
     {
-        return $this->country->name;
+        if ($this->country != null) return $this->country->name; else return null;
     }
 }

@@ -17,7 +17,8 @@ use yii\helpers\ArrayHelper;
 class NomenclatureTypes extends \yii\db\ActiveRecord
 {
     const TYPE_PART = 1; // запчасть
-    const TYPE_SERVICE = 2; // услуга
+    const TYPE_STUFF = 2; // материал
+    const TYPE_SERVICE = 3; // услуга
 
     /**
      * @inheritdoc

@@ -35,7 +35,16 @@ use yii\bootstrap\ActiveForm;
                     </div>
                 </div>
                 <div class="form-group">
-                    <?= $form->field($model, 'notes')->textarea(['rows' => 3]) ?>
+                    <?= $form->field($model, 'notes', [
+                        'template' => '<label class="field prepend-icon">
+                        {input}
+                        <label for="comment" class="field-icon">
+                            <i class="fa fa-comments"></i>
+                        </label>
+                        <span class="input-footer">
+                              <strong>Необязательно:</strong> Введите заметки к поставщику на свое усмотрение.</span>
+                    </label>'
+                    ])->textarea(['rows' => 3, 'class' => 'gui-textarea',]) ?>
 
                 </div>
             </div>

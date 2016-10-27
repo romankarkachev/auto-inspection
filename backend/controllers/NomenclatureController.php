@@ -3,17 +3,20 @@
 namespace backend\controllers;
 
 use Yii;
+use common\models\UsersNomenclature;
+use common\models\CreateUserNomenclatureForm;
 use common\models\Nomenclature;
 use common\models\NomenclatureSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
- * NomenclatureCommonController implements the CRUD actions for Nomenclature model.
+ * NomenclatureController implements the CRUD actions for Nomenclature model.
  */
-class NomenclatureCommonController extends Controller
+class NomenclatureController extends Controller
 {
     /**
      * @inheritdoc
@@ -25,7 +28,7 @@ class NomenclatureCommonController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'create', 'update', 'delete'],
+                        'actions' => ['index', 'new', 'create', 'update', 'delete', 'list-nf'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -56,20 +59,40 @@ class NomenclatureCommonController extends Controller
     }
 
     /**
-     * Creates a new Nomenclature model.
-     * If creation is successful, the browser will be redirected to the 'index' page.
+     * Отображает страницу добавления новой номенклатуры.
+     * Добавление происходит через создание новой или через добавление из списка существующих.
+     * Через значение в параметрах можно перенаправить пользователя в соответствующий раздел номенклатуры,
+     * например, запчасти (если он оттуда пришел).
+     * @param $action string
+     * @param $return string
      * @return mixed
      */
-    public function actionCreate()
+    public function actionNew($action = null, $return = null)
     {
-        $model = new Nomenclature();
+        $model = new UsersNomenclature();
+        $model->user_id = Yii::$app->user->id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/nomenclature-common']);
-        } else {
+        $nomenclature = new CreateUserNomenclatureForm();
+
+        if ($action == null && $return == null) {
             return $this->render('create', [
                 'model' => $model,
+                'nomenclature' => $nomenclature,
+                'return' => $return,
             ]);
+        }
+
+        switch ($action) {
+            case 'add':
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    return $this->redirect(['/nomenclature'.($return == null ? '' : '-' . $return)]);
+                }
+                break;
+            case 'create':
+                if ($nomenclature->load(Yii::$app->request->post()) && $nomenclature->save()) {
+                    return $this->redirect(['/nomenclature' . ($return == null ? '' : '-' . $return)]);
+                }
+                break;
         }
     }
 
@@ -119,5 +142,31 @@ class NomenclatureCommonController extends Controller
         } else {
             throw new NotFoundHttpException('Запрошенная страница не может быть найдена.');
         }
+    }
+
+    /**
+     * Функция выполняет поиск номенклатуры по наименованию, переданному в параметрах.
+     * @param string $q
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function actionListNf($q)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $query = Nomenclature::find()->select([
+            'id' => 'nomenclature.id',
+            'text' => 'nomenclature.name',
+            'nomenclature.name_full',
+            'category_id',
+            'type_id',
+            'unit_id',
+            'IFNULL(nomenclature_categories.name, "-") AS `ncat`',
+            'ntype' => 'nomenclature_types.name',
+            'IFNULL(units.name, "-") AS `nunit`',
+        ])
+            ->joinWith(['category', 'type', 'unit'], false)
+            ->andFilterWhere(['like', 'nomenclature.name', $q]);
+
+        return ['results' => $query->asArray()->all()];
     }
 }
